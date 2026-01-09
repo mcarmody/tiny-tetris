@@ -47,16 +47,22 @@ A browser-based Tetris game built to demonstrate frontend skills for Encord's hi
 
 ---
 
-### Phase 2: Types and Pieces
+### Phase 2: Types, Pieces, and Board Utilities
 
 **Actions:**
 - Create `types.ts` with all type definitions
 - Create `pieces.ts` with 7 tetromino definitions
 - Export helper: `getRandomPiece(): Piece`
+- Create `board.ts` with:
+  - `createEmptyBoard(): Board`
+  - `lockPiece(board, activePiece): Board` (stub for now)
+  - `clearLines(board): Board` (stub for now)
 
 **Acceptance criteria:**
 - Types compile without errors
 - Can import and log a random piece
+- Can create an empty 20×10 board
+- All pieces fit within board bounds when spawned at (0,0) (especially 4-wide I-piece)
 
 ---
 
@@ -65,16 +71,32 @@ A browser-based Tetris game built to demonstrate frontend skills for Encord's hi
 **Actions:**
 - Create `Cell.tsx`: renders single cell with color or empty state
 - Create `Board.tsx`: renders 10×20 CSS Grid of cells
-- Create `Game.tsx`: holds board state, renders Board
+- Create `Game.tsx`: holds board state (using `createEmptyBoard()`), renders Board
+- Update `App.tsx`: render Game component
 - Style grid with visible borders/gaps
 
 **Acceptance criteria:**
 - 10×20 grid visible on screen
 - Can manually set cells to colors and see them render
+- App.tsx properly imports and renders Game
 
 ---
 
-### Phase 4: Game Loop and Falling
+### Phase 4: Basic UI Controls
+
+**Actions:**
+- Create `Controls.tsx` with Start button
+- Wire Start button to begin game (sets status to 'playing')
+- Add basic styling for controls
+
+**Acceptance criteria:**
+- Start button visible on screen
+- Clicking Start changes game status to 'playing'
+- Can trigger state changes from UI
+
+---
+
+### Phase 5: Game Loop and Falling
 
 **Actions:**
 - Create `useGameLoop.ts`: setInterval hook that calls tick function
@@ -83,31 +105,31 @@ A browser-based Tetris game built to demonstrate frontend skills for Encord's hi
 - Each tick: move piece down by 1
 
 **Acceptance criteria:**
-- Clicking start spawns a piece at top-left
+- Clicking Start spawns a piece at top-left
 - Piece visually falls one row per second
 - Piece falls through bottom (collision not yet implemented)
 
 ---
 
-### Phase 5: Collision Detection
+### Phase 6: Collision Detection
 
 **Actions:**
 - Create `collision.ts` with `canMove()` function
 - Integrate collision check into tick: stop at floor
 - Integrate collision check into tick: stop on landed pieces
-- Prevent horizontal movement through walls
+- Add wall collision checks (will be fully tested when keyboard controls added)
 
 **Acceptance criteria:**
 - Piece stops at row 19 (floor)
 - Piece stops when it would overlap a locked piece
-- Piece cannot move left past column 0 or right past column 9
+- `canMove()` returns false for out-of-bounds positions (left past 0, right past 9)
 
 ---
 
-### Phase 6: Lock and Line Clear
+### Phase 7: Lock and Line Clear
 
 **Actions:**
-- Create `board.ts` with `lockPiece()` and `clearLines()` functions
+- Implement `lockPiece()` and `clearLines()` in `board.ts` (created in Phase 2)
 - When piece cannot fall further: lock it to board state
 - After locking: check and clear full rows
 - Rows above cleared rows drop down
@@ -120,7 +142,7 @@ A browser-based Tetris game built to demonstrate frontend skills for Encord's hi
 
 ---
 
-### Phase 7: Keyboard Controls
+### Phase 8: Keyboard Controls
 
 **Actions:**
 - Create `useKeyboard.ts`: listens for keydown events
@@ -136,21 +158,21 @@ A browser-based Tetris game built to demonstrate frontend skills for Encord's hi
 
 ---
 
-### Phase 8: UI Controls
+### Phase 9: Complete UI Controls
 
 **Actions:**
-- Create `Controls.tsx` with Start/Restart button
+- Add Restart button to `Controls.tsx`
 - Add on-screen arrow buttons for touch/accessibility
 - Style controls appropriately
 
 **Acceptance criteria:**
-- Start button begins game from idle state
 - Restart button resets game from any state
 - On-screen arrows function identically to keyboard
+- All controls are clearly labeled
 
 ---
 
-### Phase 9: Game Over
+### Phase 10: Game Over
 
 **Actions:**
 - Detect game over: new piece cannot spawn without collision
@@ -165,7 +187,7 @@ A browser-based Tetris game built to demonstrate frontend skills for Encord's hi
 
 ---
 
-### Phase 10: Polish
+### Phase 11: Polish
 
 **Actions:**
 - Review all edge cases
