@@ -7,7 +7,7 @@
 | Build | Vite | Fast dev server, simple config |
 | UI | React 18 | Component model fits grid-based rendering |
 | Language | TypeScript | Type safety for game state |
-| Styling | Tailwind CSS | Rapid styling, easy grid layout |
+| Styling | Tailwind CSS v4 | Rapid styling, easy grid layout |
 | Rendering | CSS Grid + DOM | No continuous animation needed; cells snap to grid positions |
 
 ---
@@ -32,14 +32,51 @@ encord-tetris/
 │   │   └── collision.ts       # Collision detection logic
 │   ├── App.tsx                # Root component
 │   ├── main.tsx               # Entry point
-│   └── index.css              # Tailwind imports
+│   └── index.css              # Tailwind v4 import: @import "tailwindcss";
 ├── index.html
 ├── package.json
 ├── tsconfig.json
-├── tailwind.config.js
-├── vite.config.ts
+├── vite.config.ts             # Includes @tailwindcss/vite plugin
 └── README.md
 ```
+
+**Note:** Tailwind CSS v4 does NOT use `tailwind.config.js` or `postcss.config.js`
+
+---
+
+## Tailwind CSS v4 Setup
+
+**IMPORTANT:** This project uses Tailwind CSS v4, which has significant changes from v3.
+
+### Installation
+```bash
+npm create vite@latest . -- --template react-ts
+npm install -D tailwindcss@latest @tailwindcss/vite
+```
+
+### Configuration
+
+**vite.config.ts:**
+```typescript
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+})
+```
+
+**src/index.css:**
+```css
+@import "tailwindcss";
+```
+
+### Key Differences from v3
+- **NO** `tailwind.config.js` file (v4 uses Vite plugin instead)
+- **NO** `postcss.config.js` file needed
+- Use `@import "tailwindcss";` instead of the old `@tailwind base/components/utilities;` directives
+- Utility classes work the same: `bg-cyan-500`, `grid-cols-10`, etc.
 
 ---
 

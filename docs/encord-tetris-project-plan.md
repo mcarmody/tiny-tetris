@@ -34,13 +34,16 @@ A browser-based Tetris game built to demonstrate frontend skills for Encord's hi
 ### Phase 1: Project Setup
 
 **Actions:**
-- Initialize Vite + React + TypeScript project
-- Install and configure Tailwind CSS
+- Initialize Vite + React + TypeScript project: `npm create vite@latest . -- --template react-ts`
+- Install Tailwind CSS v4: `npm install -D tailwindcss@latest @tailwindcss/vite`
+- Add `@tailwindcss/vite` plugin to `vite.config.ts`
+- Add `@import "tailwindcss";` to `src/index.css`
 - Create folder structure per technical architecture
 - Verify dev server runs
 
 **Acceptance criteria:**
 - `npm run dev` shows blank React app with Tailwind working
+- No `tailwind.config.js` file needed (v4 uses Vite plugin)
 
 ---
 
@@ -218,5 +221,5 @@ On-screen buttons are also available for touch devices.
 - Vite
 - React 18
 - TypeScript
-- Tailwind CSS
+- Tailwind CSS v4
 ```
