@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Board as BoardType, GameStatus, ActivePiece } from '../game/types';
-import { createEmptyBoard, lockPiece, clearLines } from '../game/board';
+import { createEmptyBoard, lockPiece, clearLines, getFullRows } from '../game/board';
 import { getRandomPiece } from '../game/pieces';
 import { canMove } from '../game/collision';
 import Board from './Board';
@@ -12,10 +12,18 @@ function Game() {
   const [status, setStatus] = useState<GameStatus>('idle');
   const [board, setBoard] = useState<BoardType>(createEmptyBoard());
   const [activePiece, setActivePiece] = useState<ActivePiece | null>(null);
+  const [clearingRows, setClearingRows] = useState<number[]>([]);
 
   const spawnPiece = () => {
     const piece = getRandomPiece();
-    const spawnPosition = { x: 0, y: 0 };
+
+    // Calculate max x position so piece fits within board (10 columns)
+    const maxX = Math.max(...piece.shape.map(block => block.x));
+    const maxSpawnX = 9 - maxX;
+
+    // Random x position across the top
+    const randomX = Math.floor(Math.random() * (maxSpawnX + 1));
+    const spawnPosition = { x: randomX, y: 0 };
 
     // Check if spawn position is blocked
     if (!canMove(board, piece, spawnPosition)) {
@@ -63,11 +71,27 @@ function Game() {
         position: newPosition,
       });
     } else {
-      // Collision detected - lock piece and spawn new one
-      let newBoard = lockPiece(board, activePiece);
-      newBoard = clearLines(newBoard);
-      setBoard(newBoard);
-      spawnPiece();
+      // Collision detected - lock piece
+      const newBoard = lockPiece(board, activePiece);
+      const fullRows = getFullRows(newBoard);
+
+      if (fullRows.length > 0) {
+        // Rows to clear - show animation first
+        setClearingRows(fullRows);
+        setBoard(newBoard);
+
+        // Clear rows after animation
+        setTimeout(() => {
+          const clearedBoard = clearLines(newBoard);
+          setBoard(clearedBoard);
+          setClearingRows([]);
+          spawnPiece();
+        }, 500);
+      } else {
+        // No rows to clear - spawn immediately
+        setBoard(newBoard);
+        spawnPiece();
+      }
     }
   }, [activePiece, board]);
 
@@ -119,7 +143,7 @@ function Game() {
       <div className="text-white text-3xl font-bold">
         Tetris
       </div>
-      <Board board={board} activePiece={activePiece} />
+      <Board board={board} activePiece={activePiece} clearingRows={clearingRows} />
       <Controls
         status={status}
         onStart={handleStart}

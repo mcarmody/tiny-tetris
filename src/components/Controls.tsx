@@ -15,7 +15,7 @@ function Controls({ status, onStart, onRestart, onMove }: ControlsProps) {
         {status === 'idle' && (
           <button
             onClick={onStart}
-            className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors"
+            className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors cursor-pointer"
           >
             Start Game
           </button>
@@ -23,7 +23,7 @@ function Controls({ status, onStart, onRestart, onMove }: ControlsProps) {
         {(status === 'playing' || status === 'gameover') && (
           <button
             onClick={onRestart}
-            className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors"
+            className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors cursor-pointer"
           >
             Restart
           </button>
@@ -44,7 +44,7 @@ function Controls({ status, onStart, onRestart, onMove }: ControlsProps) {
           <div className="flex flex-col items-center gap-1">
             <button
               onClick={() => onMove('down')}
-              className="bg-gray-700 text-white w-12 h-12 rounded hover:bg-gray-600 transition-colors flex items-center justify-center"
+              className="bg-gray-700 text-white w-12 h-12 rounded hover:bg-gray-600 transition-colors flex items-center justify-center cursor-pointer"
               aria-label="Move down"
             >
               ↓
@@ -52,14 +52,14 @@ function Controls({ status, onStart, onRestart, onMove }: ControlsProps) {
             <div className="flex gap-1">
               <button
                 onClick={() => onMove('left')}
-                className="bg-gray-700 text-white w-12 h-12 rounded hover:bg-gray-600 transition-colors flex items-center justify-center"
+                className="bg-gray-700 text-white w-12 h-12 rounded hover:bg-gray-600 transition-colors flex items-center justify-center cursor-pointer"
                 aria-label="Move left"
               >
                 ←
               </button>
               <button
                 onClick={() => onMove('right')}
-                className="bg-gray-700 text-white w-12 h-12 rounded hover:bg-gray-600 transition-colors flex items-center justify-center"
+                className="bg-gray-700 text-white w-12 h-12 rounded hover:bg-gray-600 transition-colors flex items-center justify-center cursor-pointer"
                 aria-label="Move right"
               >
                 →

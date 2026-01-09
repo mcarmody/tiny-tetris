@@ -16,6 +16,16 @@ export function lockPiece(board: Board, activePiece: ActivePiece): Board {
   return newBoard;
 }
 
+export function getFullRows(board: Board): number[] {
+  const fullRows: number[] = [];
+  board.forEach((row, index) => {
+    if (row.every(cell => cell !== null)) {
+      fullRows.push(index);
+    }
+  });
+  return fullRows;
+}
+
 export function clearLines(board: Board): Board {
   const clearedBoard = board.filter(row => row.some(cell => cell === null));
   const clearedCount = 20 - clearedBoard.length;

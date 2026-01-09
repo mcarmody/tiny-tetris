@@ -4,9 +4,10 @@ import Cell from './Cell';
 type BoardProps = {
   board: BoardType;
   activePiece?: ActivePiece | null;
+  clearingRows?: number[];
 };
 
-function Board({ board, activePiece }: BoardProps) {
+function Board({ board, activePiece, clearingRows = [] }: BoardProps) {
   const getCellColor = (x: number, y: number): string | null => {
     // Check if active piece occupies this cell
     if (activePiece) {
@@ -30,7 +31,11 @@ function Board({ board, activePiece }: BoardProps) {
       >
         {board.map((row, y) =>
           row.map((_, x) => (
-            <Cell key={`${x}-${y}`} color={getCellColor(x, y)} />
+            <Cell
+              key={`${x}-${y}`}
+              color={getCellColor(x, y)}
+              isClearing={clearingRows.includes(y)}
+            />
           ))
         )}
       </div>
